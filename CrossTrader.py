@@ -1,5 +1,14 @@
-import csv
+#System Tester.py - programmed by George Pruitt
+#Feel free to distribute and improve upon
+#Version 2.0
+#/////////////////////////////////////////////////////////////////////////////////
+#--------------------------------------------------------------------------------
+#Import Section - inlcude functions, classes, variables
+#from external modules
+#--------------------------------------------------------------------------------
+#import csv
 #import numpy as np
+
 import tkinter as tk
 import os.path
 from marketDataClass import marketDataClass
@@ -95,6 +104,7 @@ def exitPos(myExitPrice,myExitDate,tempName,myCurShares):
     for remShares in range(0,len(entryQuant)):
        curShares += entryQuant[remShares]
     return (profit,trades,curShares)
+    
 def bookTrade(entryOrExit,lOrS,price,date,tradeName,shares):
     global mp,commission,totProfit,curShares,barsSinceEntry,listOfTrades
     global entryPrice,entryQuant,exitPrice,numShares,myBPV,cumuProfit
@@ -264,6 +274,7 @@ if __name__ == '__main__':
     curShares = 0
     commission = 50
     cumuProfit = 25
+    systemMarketList = list()
 
     numMarkets = len(marketList)
     for i in range(0,numMarkets):
@@ -277,6 +288,11 @@ if __name__ == '__main__':
         myBPVList.append(myBPV)
         myComNameList.append(myComName)
         myMinMoveList.append(myMinMove)
+        systemMarket = systemMarketClass()
+        systemMarket.systemName = "CrossTest1"
+        systemMarket.symbol = myComName
+        systemMarketList.append(systemMarket)
+
     masterDateGlob = list()
     for i in range(0,numMarkets):
         numDaysInData = len(smtl[i].marketData.date)
@@ -369,9 +385,12 @@ if __name__ == '__main__':
                 dailyPortCombEqu += portManager.individEquity[portEquItm][1]
                 portEquItm += 1
         portManager.combinedEquity.append(dailyPortCombEqu)
+
+
     for j in range(0,numMarkets):
         myCumuProfit = 0
         numsmtlTrades = len(smtl[j].tradesList)
+        systemMarketList[j].
         for i in range(0,len(smtl[j].tradesList)):
             myCumuProfit += smtl[j].tradesList[i].tradeProfit
 ##            print(i," ",numsmtlTrades," ",smtl[j].tradesList[i].tradeDate,",",smtl[j].tradesList[i].tradeName,",",smtl[j].tradesList[i].tradePrice,",",smtl[j].tradesList[i].tradeProfit," ",myCumuProfit)
@@ -383,4 +402,3 @@ if __name__ == '__main__':
 
     for j in range(0,len(portManager.combinedEquity)):
         print(portManager.portDate[j],' ',portManager.combinedEquity[j])
-
